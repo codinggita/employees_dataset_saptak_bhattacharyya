@@ -1,76 +1,125 @@
-# Employee Dataset MVC Backend API (MERN Stack)
+# Employee Hub - Full Stack Management Platform (MERN)
 
-A highly optimized, industry-standard, and beginner-friendly **Node.js, Express.js, and MongoDB (Mongoose)** backend built using the **MVC (Model-View-Controller)** architecture. 
+A highly optimized, production-ready full-stack application for managing and analyzing an organization's employee dataset. Built using the **MERN Stack (MongoDB, Express, React, Node.js)**, this platform offers a sleek, dark-themed responsive glassmorphic UI integrated with a robust backend using the **MVC (Model-View-Controller)** pattern.
 
-This backend is designed to handle a large raw dataset of **4,109 employee records**, featuring deep search, pagination, sorting, dynamic queries, custom middleware layers, secure JWT authentication with role-based access control, and native MongoDB Aggregation pipelines for statistical analytics reports.
+The platform handles a raw dataset of **4,109 employee records** and features secure JWT authentication, role-based access control (RBAC), advanced MongoDB Aggregation pipelines for statistical reporting, and system health tail logging.
 
 ---
 
-## 📁 Folder Structure (MVC)
-
-This project strictly adheres to the standard MVC separation of concerns, dividing route handling, request/response validation, database/business operations, and data models cleanly:
+## 📁 Project Structure
 
 ```text
-backend/
-├── config/
-│   └── db.js                 # MongoDB Atlas connection logic
-├── controllers/
-│   ├── authController.js     # Database operations & request handlers for Auth & Tokens
-│   └── employeeController.js # Database operations, Aggregations & handlers for Employees
-├── middleware/
-│   ├── auditMiddleware.js    # Logs POST/PUT/DELETE actions for audit history
-│   ├── authMiddleware.js     # JWT token extraction and Admin role validation
-│   ├── errorMiddleware.js    # Centralized global error handler
-│   ├── loggerMiddleware.js   # Custom request logging and timing headers
-│   ├── rateLimitMiddleware.js# API abuse rate limiter
-│   └── validationMiddleware.js# Custom request payload validation layer
-├── models/
-│   └── employeeModel.js      # Mongoose nested schema design with indexing
-├── routes/
-│   ├── authRoutes.js         # Express router for Authentication & JWT endpoints
-│   └── employeeRoutes.js     # Express router for CRUD, Analytics & Stats
-├── .env                      # Local environment configuration file
-├── index.js                  # Main server entry file
-├── package.json              # NPM dependencies & boot scripts
-└── node_modules/             # Dependency libraries
+employees_dataset_saptak_bhattacharyya/
+├── backend/                  # MVC Node.js/Express Backend API
+│   ├── config/               # DB Connection logic
+│   ├── controllers/          # Database operations & request handlers
+│   ├── middleware/           # Security, audit, rate limiter, and error layer
+│   ├── models/               # Mongoose schemas & indexes
+│   ├── routes/               # API endpoints routing
+│   └── index.js              # Server entry point
+│
+└── frontend/                 # Vite-powered React Frontend App
+    ├── public/               # Static assets & SVG icons
+    ├── src/
+    │   ├── assets/           # Media & graphics assets
+    │   ├── components/       # Reusable React UI views
+    │   │   ├── Analytics.jsx     # Aggregation metrics & bar charts
+    │   │   ├── EmployeeForm.jsx  # Employee profile onboard/edit form
+    │   │   ├── EmployeeList.jsx  # Staff Directory list, search & filters
+    │   │   ├── Login.jsx         # Sign In, registration, OTP password reset
+    │   │   ├── Navbar.jsx        # Sidebar navigation & user details
+    │   │   ├── Profile.jsx       # Personal preferences & password updates
+    │   │   └── SystemHealth.jsx  # Admin diagnostics & logs tail console
+    │   ├── App.jsx           # Root layout & view coordinator
+    │   ├── index.css         # Styling system & dark theme tokens
+    │   └── main.jsx          # Frontend entry point
+    └── vite.config.js        # Build configuration
 ```
+
+---
+
+## ✨ Features
+
+### 🔐 1. Identity & Security (Auth)
+* **JWT-Based Authentication**: Secure login, account registration, and session token persistence.
+* **OTP Password Reset**: Dynamic code simulation for secure password recovery.
+* **Role-Based Access Control (RBAC)**: Distinct permissions for `Admin` and `Employee` roles.
+* **Profile Management**: Live account details updates and password change configuration.
+
+### 📁 2. Employee Directory (CRUD)
+* **Rich Search**: Deep instant searching across names, skills, domains, cities, and countries.
+* **Multi-Filter Framework**: Filter staff by industrial domain and primary technical skills.
+* **Sorting Engine**: Sort dynamically by name, experience levels, and geographical location.
+* **Onboarding & Offboarding**: Direct staff addition, modification, and deletion (restricted to Admins).
+
+### 📊 3. Statistical Reports (Analytics)
+* **MongoDB Aggregations**: Real-time analytical statistics fetched via native aggregation pipelines.
+* **Top Technical Skills**: Charted distribution of primary tech expertise.
+* **Top Industry Domains**: Distribution of domains across the team.
+* **Location Hotspots**: Geographical density reporting by country, state, and city.
+
+### ⚙️ 4. System Diagnostics
+* **Live System Health**: API status indicator, uptime tracker, and server environment metadata.
+* **Dynamic Log Console**: Tail system audit logs (HTTP requests, database changes, middleware executions) in real-time (restricted to Admins).
+* **Cache Management**: Instantly flush cache and temporary in-memory collections.
 
 ---
 
 ## 🚀 Installation & Local Setup
 
-### 1. Clone & Navigate
-Ensure you are in the backend directory of the project:
-```bash
-cd backend
-```
+### Prerequisites
+* **Node.js** (v18 or higher)
+* **npm** (v9 or higher)
+* **MongoDB Atlas** database connection
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+---
 
-### 3. Setup Environment Variables (`.env`)
-Create a `.env` file exactly in the root of the `backend/` folder and paste your configurations:
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://saptak:pass123@cluster0.sno1mef.mongodb.net/employee_db?retryWrites=true&w=majority
-JWT_SECRET=supersecretkey
-```
+### Step 1: Run the Backend API
 
-### 4. Launch the Development Server
-```bash
-npm run dev
-```
-The server will boot up and establish a live connection to MongoDB Atlas:
-```text
-Server running on port 5000
-MongoDB Connected: cluster0.sno1mef.mongodb.net
-```
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file in the root of the `backend/` folder:
+   ```env
+   PORT=5000
+   MONGO_URI=mongodb+srv://<username>:<password>@cluster0.sno1mef.mongodb.net/employee_db
+   JWT_SECRET=supersecretkey
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+### Step 2: Run the Frontend Client
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd ../frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file in the root of the `frontend/` folder:
+   ```env
+   VITE_API_URL=http://localhost:5000
+   ```
+4. Start the Vite client dev server:
+   ```bash
+   npm run dev
+   ```
+5. Open your browser and navigate to: **[http://localhost:5173](http://localhost:5173)**
 
 ---
 
 ## 🔗 Live API Documentation Link
 
-You can view the beautifully rendered public web version of this API documentation (including all requests, request bodies, query parameters, and example JSON payloads) at:
+Explore all REST API routes, schemas, request payloads, and query structures:
 👉 **[Live Postman API Documentation](https://documenter.getpostman.com/view/50841251/2sBXwntBts)**
